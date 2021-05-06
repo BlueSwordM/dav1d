@@ -1080,7 +1080,7 @@ function generate_grain_\type\()_8bpc_neon, export=1
 
 .ifc \type, uv_444
         mov             w13, w3
-        mov             w14, #28
+        mov             w14, #26
         add             x19, x1,  #3*GRAIN_WIDTH
         mov             x1,  x2
         mul             w13, w13, w14
@@ -1312,7 +1312,7 @@ function generate_grain_\type\()_8bpc_neon, export=1
         stp             x30, x19, [sp, #-96]!
 
         mov             w13, w3
-        mov             w14, #28
+        mov             w14, #26
         add             x19, x1,  #3*GRAIN_WIDTH-3
         mov             x1,  x2
         mul             w13, w13, w14

@@ -70,11 +70,11 @@ struc FGData
     .y_points:                  resb 14 * 2
     .chroma_scaling_from_luma:  resd 1
     .num_uv_points:             resd 2
+    .scaling_shift:             resq 1
     .uv_points:                 resb 2 * 10 * 2
-    .scaling_shift:             resd 1
     .ar_coeff_lag:              resd 1
     .ar_coeffs_y:               resb 24
-    .ar_coeffs_uv:              resb 2 * 28 ; includes padding
+    .ar_coeffs_uv:              resb 2 * 26 ; includes padding
     .ar_coeff_shift:            resq 1
     .grain_scale_shift:         resd 1
     .uv_mult:                   resd 2
@@ -617,7 +617,7 @@ cglobal generate_grain_uv_%1, 1, 7 + 3 * ARCH_X86_64, 16, buf, bufy, fg_data, uv
 %assign stack_offset_old stack_offset
     ALLOC_STACK   -2*16
 %endif
-    imul            uvd, 28
+    imul            uvd, 26
     mov          shiftd, [fg_dataq+FGData.ar_coeff_shift]
     movd             m5, [fg_dataq+FGData.ar_coeffs_uv+uvq]
     movd             m4, [base+hmul_bits+shiftq*2]
@@ -756,7 +756,7 @@ cglobal generate_grain_uv_%1, 1, 7 + 3 * ARCH_X86_64, 16, buf, bufy, fg_data, uv
 %xdefine rstk rsp
 %endif
     DEFINE_ARGS buf, bufy, fg_data, uv, val3, cf3, min, max, x
-    imul            uvd, 28
+    imul            uvd, 26
     movsx          cf3d, byte [fg_dataq+FGData.ar_coeffs_uv+uvq+3]
     movd             m4, [fg_dataq+FGData.ar_coeffs_uv+uvq-1]
     pinsrw           m4, [fg_dataq+FGData.ar_coeffs_uv+uvq+4], 2
@@ -902,7 +902,7 @@ cglobal generate_grain_uv_%1, 1, 7 + 3 * ARCH_X86_64, 16, buf, bufy, fg_data, uv
     DEFINE_ARGS buf, bufy, fg_data, uv, unused, shift
     movifnidn     bufyq, bufymp
     mov          shiftd, [fg_dataq+FGData.ar_coeff_shift]
-    imul            uvd, 28
+    imul            uvd, 26
     movd             m7, [base+round_vals-12+shiftq*2]
     movu             m0, [fg_dataq+FGData.ar_coeffs_uv+uvq+0]   ; cf0-12
     pxor             m2, m2
@@ -1041,7 +1041,7 @@ cglobal generate_grain_uv_%1, 1, 7 + 3 * ARCH_X86_64, 16, buf, bufy, fg_data, uv
 %assign stack_size (stack_size+16*7)
 %endif
     mov          shiftd, [fg_dataq+FGData.ar_coeff_shift]
-    imul            uvd, 28
+    imul            uvd, 26
 
     movu             m0, [fg_dataq+FGData.ar_coeffs_uv+uvq+ 0]   ; cf0-15
     pxor             m3, m3

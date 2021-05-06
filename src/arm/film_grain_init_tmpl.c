@@ -142,7 +142,7 @@ static void fgy_32x32xn_neon(pixel *const dst_row, const pixel *const src_row,
             type |= 2; /* overlap x */
 
         BF(dav1d_fgy_32x32, neon)(dst_row + bx, src_row + bx, stride,
-                                  scaling, data->scaling_shift,
+                                  scaling, (int) data->scaling_shift,
                                   grain_lut, offsets, bh,
                                   data->clip_to_restricted_range, type
                                   HIGHBD_TAIL_SUFFIX);

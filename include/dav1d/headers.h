@@ -318,11 +318,11 @@ typedef struct Dav1dFilmGrainData {
     uint8_t y_points[14][2 /* value, scaling */];
     int chroma_scaling_from_luma;
     int num_uv_points[2];
+    uint64_t scaling_shift;
     uint8_t uv_points[2][10][2 /* value, scaling */];
-    int scaling_shift;
     int ar_coeff_lag;
     int8_t ar_coeffs_y[24];
-    int8_t ar_coeffs_uv[2][25 + 3 /* padding for alignment purposes */];
+    int8_t ar_coeffs_uv[2][25 + 1 /* padding for alignment purposes */];
     uint64_t ar_coeff_shift;
     int grain_scale_shift;
     int uv_mult[2];
